@@ -1,0 +1,11 @@
+---
+
+- name: setup aia
+  hosts: aia
+  become: yes
+  tasks:
+
+    - name: setup aia
+      import_role:
+        name: aia
+      tags: aia

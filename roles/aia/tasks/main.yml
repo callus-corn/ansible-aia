@@ -1,0 +1,60 @@
+---
+
+- name: install nginx
+  dnf:
+    name: nginx
+    state: latest
+
+- name: config nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: put ca crt
+  copy:
+    src: "{{ ansible_cert_src_dir }}/ca/ca.crt"
+    dest: /usr/share/nginx/aia/ca.crt
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: put ca crl
+  copy:
+    src: "{{ ansible_cert_src_dir }}/ca/ca.crl"
+    dest: /usr/share/nginx/aia/ca.crl
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: put ica crt
+  copy:
+    src: "{{ ansible_cert_src_dir }}/ica/ica.crt"
+    dest: /usr/share/nginx/aia/ica.crt
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: put ica crl
+  copy:
+    src: "{{ ansible_cert_src_dir }}/ica/ica.crl"
+    dest: /usr/share/nginx/aia/ica.crl
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: port open
+  firewalld:
+    zone: public
+    port: 80/udp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: start nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
