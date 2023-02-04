@@ -56,7 +56,7 @@
 - name: port open
   firewalld:
     zone: public
-    port: 80/udp
+    port: 80/tdp
     permanent: yes
     immediate: yes
     state: enabled
