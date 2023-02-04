@@ -13,6 +13,14 @@
     group: "root"
     mode: 0644
 
+- name: mkdir
+  file:
+    path: /usr/share/nginx/aia
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: 0755
+
 - name: put ca crt
   copy:
     src: "{{ ansible_cert_src_dir }}/ca/ca.crt"
